@@ -30,7 +30,7 @@
     },
 
     _getFirstRowColumnIndexForMajorDiagonalOn: function(rowIndex, colIndex) {
-      return colIndex - rowIndex;
+      return colIndex - rowIndex; //return major column
     },
 
     _getFirstRowColumnIndexForMinorDiagonalOn: function(rowIndex, colIndex) {
@@ -79,12 +79,28 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      const numRows = this.attributes.n;
+      let sum = 0;
+
+      for (let i = 0; i<numRows; i++){
+        sum += this.rows()[rowIndex][i];
+      }
+      
+      if (sum > 1) {
+        return true;
+      }
+
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var numRows = this.attributes.n;
+
+      for (let i = 0; i<numRows; i++){
+        if (this.hasRowConflictAt(i)) return true;
+      }
+
+      return false;
     },
 
 
@@ -94,12 +110,27 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      //loop through row
+        //access column index
+        //add to sum
+      let sum = 0;
+
+      for (let i = 0; i < this.attributes.n; i++){
+            sum += this.rows()[i][colIndex];
+      }
+      if (sum > 1){
+        return true;
+      }
+
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+
+      for (let i = 0; i<this.attributes.n; i++){
+        if (this.hasColConflictAt(i)) return true;
+      }
+      return false;
     },
 
 
@@ -109,7 +140,32 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      //_getFirstRowColumnIndexForMajorDiagonalOn: function(rowIndex, colIndex) {
+      //call helper function get first column
+      let colIndex = majorDiagonalColumnIndexAtFirstRow;
+      const len = this.attributes.n;
+      let sum = 0;
+      var row = 0;
+      //input: value for starting column
+      //output: true or false depending on conflict on diagonal
+
+      //for loop with conditional stop at column index + 1 
+        //increment row and increment column
+          //save value to sum
+      //for (let i = 0; i<(len-colIndex); i++){
+      while (row < len && colIndex < len) {
+      if (colIndex < 0) {
+          row = Math.abs(colIndex);
+          colIndex = 0;
+        }
+        //console.log(i, colIndex);
+          sum += this.rows()[row][colIndex];
+          colIndex++;
+          row++;
+      }
+      console.log(sum)
+      return sum > 1 ? true : false;
+
     },
 
     // test if any major diagonals on this board contain conflicts

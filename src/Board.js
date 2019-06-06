@@ -145,7 +145,7 @@
       let colIndex = majorDiagonalColumnIndexAtFirstRow;
       const len = this.attributes.n;
       let sum = 0;
-      var row = 0;
+      let row = 0;
       //input: value for starting column
       //output: true or false depending on conflict on diagonal
 
@@ -158,19 +158,24 @@
           row = Math.abs(colIndex);
           colIndex = 0;
         }
-        //console.log(i, colIndex);
           sum += this.rows()[row][colIndex];
           colIndex++;
           row++;
       }
-      console.log(sum)
       return sum > 1 ? true : false;
 
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var len = this.attributes.n;
+
+      for (var i = -len+1; i < len; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -180,12 +185,34 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      let colIndex = minorDiagonalColumnIndexAtFirstRow;
+      const len = this.attributes.n;
+      let sum = 0;
+      let row = 0;
+
+      while (row < len && colIndex > -1) { //stops at column 0 
+      if (colIndex >= len) {
+          row = colIndex - (len-1);
+          colIndex = len - 1;
+        }
+
+          sum += this.rows()[row][colIndex];
+          colIndex--;
+          row++;
+      }
+      return sum > 1 ? true : false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var len = this.attributes.n;
+
+      for (var i = 0; i < (len-1)*2; i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/

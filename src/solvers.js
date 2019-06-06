@@ -61,6 +61,47 @@ window.findNRooksSolution = function(n) {
 window.countNRooksSolutions = function(n) {
   var solutionCount = undefined; //fixme
 
+  var board = findNRooksSolution(n);
+
+  for (var i = 0; i < n; i++) {
+    
+    // access the second to last row
+      // row 2: move it to where it works
+      // row 3: move it to where it works
+
+
+
+
+  }
+  //loop through first level 
+    //toggle the piece
+    //next row, toggle (0,1) 
+    //loop through next row
+    //if no conflict 
+      //toggle 
+    //add column values, place toggle where sum = 0
+
+    // helper function to place pieces and check for conflicts
+
+    // base case -> return the row when there are no conflicts
+    // recursive case-> increment column and toggle piece and check for conflicts
+
+    var placePiece = function(row, col) {
+      var currCol = row.indexOf(1); // current column position of piece
+      board.togglePiece(row, currCol); // untoggle piece
+      board.togglePiece(row, currCol++) // toggle next piece
+      if (!board.hasRowConflicts() && !board.hasColConflicts()) {
+        return row;
+      } else {
+        placePiece(row, col);
+        
+      }
+    }
+
+    
+  
+
+
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
